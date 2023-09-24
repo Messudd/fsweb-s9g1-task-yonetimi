@@ -6,7 +6,7 @@ export default function TaskHookForm({ kisiler, submitFn }) {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors , isValid},
   } = useForm({
     defaultValues: {
       title: "",
@@ -77,7 +77,13 @@ export default function TaskHookForm({ kisiler, submitFn }) {
                 type="checkbox"
                 {...register("people", {
                   required: "Lütfen en az bir kişi seçin",
+                  validate: {
+                    maxKisi: (value) =>
+                      value.length < 3 || "En fazla 3 kişi seçebilirsiniz",
+                  },
                 })}
+                name="people"
+                value={p}
               />
               {p}
             </label>
@@ -92,13 +98,7 @@ export default function TaskHookForm({ kisiler, submitFn }) {
         <button
           className="submit-button"
           type="submit"
-          disabled={
-            !!errors.title?.message ||
-            !!errors.description?.message ||
-            errors.people?.length === 0
-              ? true
-              : false
-          }
+          disabled={!isValid}
         >
           Kaydet
         </button>
