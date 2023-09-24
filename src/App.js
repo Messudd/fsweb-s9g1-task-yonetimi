@@ -20,7 +20,16 @@ function App() {
   }
 
   function handleComplete(id) {
-    console.log("tamamlama fonksiyonunu buraya yazın")
+    let newTask = [];
+    console.log('id: ', id);
+    for(let i in tasks){
+      if(tasks[i].id === id){
+        tasks[i].status = 'yapıldı';
+        newTask.push(tasks[i]);
+      }
+      else newTask.push(tasks[i]);
+    }
+    setTasks(newTask);
   }
 
   return (
@@ -28,7 +37,7 @@ function App() {
       <div className="formColumn">
         <div className="form-container">
           <h2>Yeni Task</h2>
-          {/* <TaskForm kisiler={team} submitFn={handleTaskSubmit} /> */}
+          <TaskForm kisiler={team} submitFn={handleTaskSubmit} />
           <TaskHookForm kisiler={team} submitFn={handleTaskSubmit} />
         </div>
 
